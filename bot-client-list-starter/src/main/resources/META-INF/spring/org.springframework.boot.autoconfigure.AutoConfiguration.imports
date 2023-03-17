@@ -1,0 +1,2 @@
+org.springframework.cloud.openfeign.FeignClientsConfiguration
+com.momiji.api.bot.BotClientListConfiguration

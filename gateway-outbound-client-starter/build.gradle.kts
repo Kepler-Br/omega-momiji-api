@@ -4,10 +4,9 @@ plugins {
 }
 
 dependencies {
-    api("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
 
-    api("com.fasterxml.jackson.core:jackson-annotations")
-    api("org.springframework.data:spring-data-commons")
+    api(project(":omega-momiji-api"))
 }
 
 java {
