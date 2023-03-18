@@ -1,6 +1,7 @@
 package com.momiji.api.gateway.inbound.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.momiji.api.gateway.inbound.model.enumerator.MediaType
 import com.momiji.api.gateway.inbound.model.enumerator.MessageType
 
 
@@ -19,4 +20,8 @@ data class ReceivedMessage(
     val type: MessageType,
     @JsonProperty("action_info")
     val actionInfo: ActionInfo?,
+    @JsonProperty("media_type")
+    val mediaType: MediaType?,
+    @JsonProperty("media_bytes")
+    val mediaBytes: String?,
 )

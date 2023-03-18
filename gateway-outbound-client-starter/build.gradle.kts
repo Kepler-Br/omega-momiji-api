@@ -4,6 +4,8 @@ plugins {
 }
 
 dependencies {
+    annotationProcessor("org.springframework.boot:spring-boot-autoconfigure-processor")
+
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
 
     api(project(":omega-momiji-api"))
