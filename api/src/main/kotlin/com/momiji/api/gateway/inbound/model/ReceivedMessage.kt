@@ -8,6 +8,8 @@ import com.momiji.api.gateway.inbound.model.enumerator.MessageType
 data class ReceivedMessage(
     @JsonProperty("id")
     val id: String,
+    @JsonProperty("reply_to")
+    val replyTo: String,
     @JsonProperty("author")
     val author: ReceivedUser,
     @JsonProperty("chat")

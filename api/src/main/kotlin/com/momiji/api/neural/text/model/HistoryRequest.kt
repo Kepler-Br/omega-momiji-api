@@ -14,7 +14,7 @@ data class HistoryRequest(
     @JsonProperty("num_beams")
     val numBeams: Int? = null,
     @JsonProperty("repetition_penalty")
-    val repetitionPenalty: Int? = null,
+    val repetitionPenalty: Float? = null,
     @JsonProperty("early_stopping")
     val earlyStopping: Boolean? = null,
     @JsonProperty("seed")
