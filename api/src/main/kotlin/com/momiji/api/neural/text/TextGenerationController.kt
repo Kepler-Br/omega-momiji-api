@@ -1,5 +1,6 @@
 package com.momiji.api.neural.text
 
+import com.momiji.api.common.model.BasicResponse
 import com.momiji.api.neural.text.model.HistoryRequest
 import com.momiji.api.neural.text.model.HistoryResponse
 import com.momiji.api.neural.text.model.RawRequest
@@ -14,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody
 interface TextGenerationController {
 
     @PutMapping("/history-prompts/{promptId}")
-    fun generateFromHistory(
+    fun requestGenerationFromHistory(
         @RequestBody content: HistoryRequest,
         @PathVariable promptId: UUID,
-    )
+    ): BasicResponse
 
     @GetMapping("/history-prompts/{promptId}")
     fun getGeneratedFromHistory(
@@ -25,10 +26,10 @@ interface TextGenerationController {
     ): HistoryResponse
 
     @PutMapping("/raw-prompts/{promptId}")
-    fun generateFromRaw(
+    fun requestGenerationFromRaw(
         @RequestBody content: RawRequest,
         @PathVariable promptId: UUID,
-    )
+    ): BasicResponse
 
     @GetMapping("/raw-prompts/{promptId}")
     fun getGeneratedFromRaw(

@@ -10,9 +10,9 @@ data class Message(
     @JsonProperty("author")
     val author: String,
     @JsonProperty("message_id")
-    val messageId: String,
+    val messageId: Int,
     @JsonProperty("reply_to_message_id")
-    val replyToMessageId: String? = null,
+    val replyToMessageId: Int? = null,
     @JsonProperty("emoji")
     val emoji: String? = null,
 )

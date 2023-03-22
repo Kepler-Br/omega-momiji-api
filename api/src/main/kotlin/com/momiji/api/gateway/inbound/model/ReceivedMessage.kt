@@ -9,7 +9,7 @@ data class ReceivedMessage(
     @JsonProperty("id")
     val id: String,
     @JsonProperty("reply_to")
-    val replyTo: String,
+    val replyTo: String?,
     @JsonProperty("author")
     val author: ReceivedUser,
     @JsonProperty("chat")

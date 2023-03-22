@@ -1,11 +1,13 @@
 package com.momiji.api.gateway.inbound
 
+import com.momiji.api.common.model.BasicResponse
 import com.momiji.api.gateway.inbound.model.ReceivedMessage
 import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
 
 
 interface GatewayMessageReceiverController {
 
     @PutMapping("messages")
-    fun receiveMessage(message: ReceivedMessage)
+    fun receiveMessage(@RequestBody message: ReceivedMessage): BasicResponse
 }

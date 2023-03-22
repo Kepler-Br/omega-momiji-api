@@ -1,6 +1,7 @@
 package com.momiji.api.neural.text
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.momiji.api.common.model.BasicResponse
 import com.momiji.api.common.model.ResponseStatus
 import com.momiji.api.neural.text.model.HistoryRequest
 import com.momiji.api.neural.text.model.HistoryResponse
@@ -9,23 +10,44 @@ import com.momiji.api.neural.text.model.MessageType
 import com.momiji.api.neural.text.model.RawRequest
 import com.momiji.api.neural.text.model.RawResponse
 import java.util.UUID
+import java.util.concurrent.ConcurrentHashMap
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 class TextGenerationControllerStub(
     private val objectMapper: ObjectMapper,
+    private val generateFromHistoryRequests: ConcurrentHashMap<UUID, HistoryRequest>,
 ) : TextGenerationController {
     private val logger: Logger = LoggerFactory.getLogger(javaClass)
 
-    override fun generateFromHistory(content: HistoryRequest, promptId: UUID) {
+    override fun requestGenerationFromHistory(
+        content: HistoryRequest,
+        promptId: UUID
+    ): BasicResponse {
         val requestJsonText = objectMapper.writeValueAsString(content)
 
         logger.debug(
             "Requesting text generation:\n$requestJsonText"
         )
+
+        generateFromHistoryRequests[promptId] = content
+
+        return BasicResponse(
+            status = ResponseStatus.OK,
+        )
     }
 
     override fun getGeneratedFromHistory(promptId: UUID): HistoryResponse {
+        if (!generateFromHistoryRequests.containsKey(promptId)) {
+            return HistoryResponse(
+                status = ResponseStatus.NOT_FOUND,
+                errorMessage = null,
+                messages = emptyList()
+            )
+        }
+
+        val request = generateFromHistoryRequests.remove(promptId)!!
+
         return HistoryResponse(
             status = ResponseStatus.OK,
             errorMessage = null,
@@ -33,18 +55,22 @@ class TextGenerationControllerStub(
                 Message(
                     messageType = MessageType.TEXT,
                     content = "Stub",
-                    author = "Stubber",
-                    messageId = "Stub",
+                    author = request.promptAuthor ?: "Stubber",
+                    messageId = 1,
                 )
             )
         )
     }
 
-    override fun generateFromRaw(content: RawRequest, promptId: UUID) {
+    override fun requestGenerationFromRaw(content: RawRequest, promptId: UUID): BasicResponse {
         val requestJsonText = objectMapper.writeValueAsString(content)
 
         logger.debug(
             "Requesting raw text generation:\n$requestJsonText"
+        )
+
+        return BasicResponse(
+            status = ResponseStatus.OK,
         )
     }
 

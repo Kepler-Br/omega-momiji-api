@@ -5,6 +5,7 @@ import feign.Contract
 import feign.Feign
 import feign.codec.Decoder
 import feign.codec.Encoder
+import java.util.concurrent.ConcurrentHashMap
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Bean
@@ -24,7 +25,7 @@ class NeuralTextClientConfiguration {
         havingValue = "true"
     )
     fun textGenerationClientStub(objectMapper: ObjectMapper): TextGenerationController {
-        return TextGenerationControllerStub(objectMapper)
+        return TextGenerationControllerStub(objectMapper, ConcurrentHashMap())
     }
 
     @Bean

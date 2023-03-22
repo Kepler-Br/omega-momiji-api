@@ -1,5 +1,7 @@
 package com.momiji.api.gateway.outbound
 
+import com.momiji.api.common.model.BasicResponse
+import com.momiji.api.common.model.ResponseStatus
 import com.momiji.api.common.model.SendMessageResponse
 import com.momiji.api.gateway.outbound.model.FrontendNamesResponse
 import com.momiji.api.gateway.outbound.model.SendTextMessageRequest
@@ -20,6 +22,12 @@ class GatewayMessageSenderControllerStub : GatewayMessageSenderController {
         return SendMessageResponse(
             errorMessage = null,
             messageId = "messageId"
+        )
+    }
+
+    override fun sendTypingAction(frontend: String, chatId: String): BasicResponse {
+        return BasicResponse(
+            status = ResponseStatus.OK,
         )
     }
 
