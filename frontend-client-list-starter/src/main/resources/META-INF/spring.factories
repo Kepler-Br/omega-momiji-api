@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+org.springframework.cloud.openfeign.FeignClientsConfiguration,\
+com.momiji.api.frontend.FrontendClientListConfiguration
