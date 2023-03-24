@@ -26,5 +26,5 @@ interface FrontendController {
         consumes = [MediaType.APPLICATION_JSON_VALUE],
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
-    fun sendTypingAction(@RequestParam("chatId") chatId: String): BasicResponse
+    fun sendTypingAction(@RequestParam("chat_id") chatId: String): BasicResponse
 }

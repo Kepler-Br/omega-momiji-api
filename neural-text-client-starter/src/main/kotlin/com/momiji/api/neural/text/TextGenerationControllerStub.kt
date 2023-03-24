@@ -56,7 +56,7 @@ class TextGenerationControllerStub(
                     messageType = MessageType.TEXT,
                     content = "Stub",
                     author = request.promptAuthor ?: "Stubber",
-                    messageId = 1,
+                    messageId = "1",
                 )
             )
         )
