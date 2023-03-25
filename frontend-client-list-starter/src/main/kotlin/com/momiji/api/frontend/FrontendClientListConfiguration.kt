@@ -1,5 +1,6 @@
 package com.momiji.api.frontend
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import feign.Contract
 import feign.Feign
 import feign.codec.Decoder
@@ -46,13 +47,19 @@ class FrontendClientListConfiguration {
         contract: Contract,
         decoder: Decoder,
         encoder: Encoder,
+        objectMapper: ObjectMapper,
     ): FrontendContainer {
         val clients = properties.urls.mapValues {
-            Feign.builder()
+            val client = Feign.builder()
                 .encoder(encoder)
                 .decoder(decoder)
                 .contract(contract)
                 .target(FrontendController::class.java, it.value)
+
+            FrontendControllerWrapper(
+                frontendController = client,
+                objectMapper = objectMapper,
+            )
         }
 
         return DefaultFrontendContainer(clients = clients)

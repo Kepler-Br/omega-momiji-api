@@ -3,16 +3,11 @@ package com.momiji.api.neural.text
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.momiji.api.common.model.BasicResponse
 import com.momiji.api.common.model.ResponseStatus
-import com.momiji.api.neural.text.model.HistoryRequest
-import com.momiji.api.neural.text.model.HistoryResponse
-import com.momiji.api.neural.text.model.Message
-import com.momiji.api.neural.text.model.MessageType
-import com.momiji.api.neural.text.model.RawRequest
-import com.momiji.api.neural.text.model.RawResponse
-import java.util.UUID
-import java.util.concurrent.ConcurrentHashMap
+import com.momiji.api.neural.text.model.*
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import java.util.*
+import java.util.concurrent.ConcurrentHashMap
 
 class TextGenerationControllerStub(
     private val objectMapper: ObjectMapper,

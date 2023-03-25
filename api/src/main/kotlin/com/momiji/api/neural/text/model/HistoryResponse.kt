@@ -9,5 +9,5 @@ data class HistoryResponse(
     @JsonProperty("error_message")
     val errorMessage: String?,
     @JsonProperty("messages")
-    val messages: List<Message>,
+    val messages: List<Message>?,
 )
