@@ -1,15 +1,15 @@
 package com.momiji.api.neural.text
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.momiji.api.common.model.BasicResponse
+import com.momiji.api.neural.common.model.TaskScheduledResponse
 import com.momiji.api.neural.text.model.HistoryRequest
 import com.momiji.api.neural.text.model.HistoryResponse
 import com.momiji.api.neural.text.model.RawRequest
 import com.momiji.api.neural.text.model.RawResponse
 import feign.FeignException
+import java.util.UUID
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import java.util.*
 
 class TextGenerationControllerWrapper(
     private val textGenerationController: TextGenerationController,
@@ -31,27 +31,27 @@ class TextGenerationControllerWrapper(
         }
     }
 
-    override fun requestGenerationFromHistory(content: HistoryRequest, promptId: UUID): BasicResponse {
-        return runCatching(BasicResponse::class.java) {
-            textGenerationController.requestGenerationFromHistory(content, promptId)
+    override fun requestGenerationFromHistory(content: HistoryRequest): TaskScheduledResponse {
+        return runCatching(TaskScheduledResponse::class.java) {
+            textGenerationController.requestGenerationFromHistory(content)
         }
     }
 
-    override fun getGeneratedFromHistory(promptId: UUID): HistoryResponse {
+    override fun getGeneratedFromHistory(promptId: UUID, async: Boolean): HistoryResponse {
         return runCatching(HistoryResponse::class.java) {
-            textGenerationController.getGeneratedFromHistory(promptId)
+            textGenerationController.getGeneratedFromHistory(promptId, async)
         }
     }
 
-    override fun requestGenerationFromRaw(content: RawRequest, promptId: UUID): BasicResponse {
-        return runCatching(BasicResponse::class.java) {
-            textGenerationController.requestGenerationFromRaw(content, promptId)
+    override fun requestGenerationFromRaw(content: RawRequest): TaskScheduledResponse {
+        return runCatching(TaskScheduledResponse::class.java) {
+            textGenerationController.requestGenerationFromRaw(content)
         }
     }
 
-    override fun getGeneratedFromRaw(promptId: UUID): RawResponse {
+    override fun getGeneratedFromRaw(promptId: UUID, async: Boolean): RawResponse {
         return runCatching(RawResponse::class.java) {
-            textGenerationController.getGeneratedFromRaw(promptId)
+            textGenerationController.getGeneratedFromRaw(promptId, async)
         }
     }
 }

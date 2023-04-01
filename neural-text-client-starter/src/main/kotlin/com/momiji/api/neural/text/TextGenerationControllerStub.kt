@@ -1,13 +1,18 @@
 package com.momiji.api.neural.text
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.momiji.api.common.model.BasicResponse
 import com.momiji.api.common.model.ResponseStatus
-import com.momiji.api.neural.text.model.*
+import com.momiji.api.neural.common.model.TaskScheduledResponse
+import com.momiji.api.neural.text.model.HistoryRequest
+import com.momiji.api.neural.text.model.HistoryResponse
+import com.momiji.api.neural.text.model.Message
+import com.momiji.api.neural.text.model.MessageType
+import com.momiji.api.neural.text.model.RawRequest
+import com.momiji.api.neural.text.model.RawResponse
+import java.util.UUID
+import java.util.concurrent.ConcurrentHashMap
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import java.util.*
-import java.util.concurrent.ConcurrentHashMap
 
 class TextGenerationControllerStub(
     private val objectMapper: ObjectMapper,
@@ -17,22 +22,23 @@ class TextGenerationControllerStub(
 
     override fun requestGenerationFromHistory(
         content: HistoryRequest,
-        promptId: UUID
-    ): BasicResponse {
+    ): TaskScheduledResponse {
         val requestJsonText = objectMapper.writeValueAsString(content)
 
         logger.debug(
             "Requesting text generation:\n$requestJsonText"
         )
 
+        val promptId = UUID.randomUUID()
         generateFromHistoryRequests[promptId] = content
 
-        return BasicResponse(
+        return TaskScheduledResponse(
             status = ResponseStatus.OK,
+            taskId = promptId
         )
     }
 
-    override fun getGeneratedFromHistory(promptId: UUID): HistoryResponse {
+    override fun getGeneratedFromHistory(promptId: UUID, async: Boolean): HistoryResponse {
         if (!generateFromHistoryRequests.containsKey(promptId)) {
             return HistoryResponse(
                 status = ResponseStatus.NOT_FOUND,
@@ -57,19 +63,23 @@ class TextGenerationControllerStub(
         )
     }
 
-    override fun requestGenerationFromRaw(content: RawRequest, promptId: UUID): BasicResponse {
+    override fun requestGenerationFromRaw(
+        content: RawRequest
+    ): TaskScheduledResponse {
         val requestJsonText = objectMapper.writeValueAsString(content)
 
         logger.debug(
             "Requesting raw text generation:\n$requestJsonText"
         )
+        val promptId = UUID.randomUUID()
 
-        return BasicResponse(
+        return TaskScheduledResponse(
             status = ResponseStatus.OK,
+            taskId = promptId
         )
     }
 
-    override fun getGeneratedFromRaw(promptId: UUID): RawResponse {
+    override fun getGeneratedFromRaw(promptId: UUID, async: Boolean): RawResponse {
         return RawResponse(
             text = "Stub"
         )

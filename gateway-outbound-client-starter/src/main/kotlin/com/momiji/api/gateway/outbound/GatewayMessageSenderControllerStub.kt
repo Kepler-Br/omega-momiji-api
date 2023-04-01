@@ -21,7 +21,8 @@ class GatewayMessageSenderControllerStub : GatewayMessageSenderController {
 
         return SendMessageResponse(
             errorMessage = null,
-            messageId = "messageId"
+            messageId = "messageId",
+            status = ResponseStatus.OK,
         )
     }
 

@@ -20,6 +20,7 @@ class FrontendControllerStub : FrontendController {
         return SendMessageResponse(
             errorMessage = null,
             messageId = "stub",
+            status = ResponseStatus.OK,
         )
     }
 
