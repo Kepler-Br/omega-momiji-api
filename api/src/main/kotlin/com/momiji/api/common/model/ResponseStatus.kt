@@ -2,7 +2,7 @@ package com.momiji.api.common.model
 
 enum class ResponseStatus {
     OK,
-    TOO_EARLY,
+    NOT_READY,
     TOO_MANY_REQUESTS,
     BAD_REQUEST,
     INTERNAL_SERVER_ERROR,

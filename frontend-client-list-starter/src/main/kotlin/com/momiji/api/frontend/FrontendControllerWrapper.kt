@@ -1,9 +1,11 @@
 package com.momiji.api.frontend
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.momiji.api.common.model.BasicResponse
+import com.momiji.api.common.model.ResponseStatus
 import com.momiji.api.common.model.SendMessageRequest
 import com.momiji.api.common.model.SendMessageResponse
+import com.momiji.api.common.model.SimpleResponse
+import com.momiji.api.common.model.exception.ServiceResponseException
 import feign.FeignException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -22,21 +24,33 @@ class FrontendControllerWrapper(
             try {
                 objectMapper.readValue(ex.responseBody().get().array(), valueType)
             } catch (ex2: Exception) {
-                logger.error("Unable to deserialize returned value from service. Throwing original exception", ex)
+                logger.error("Unable to deserialize returned value from service. Throwing original exception", ex2)
                 throw ex
             }
         }
     }
 
     override fun sendTextMessage(body: SendMessageRequest): SendMessageResponse {
-        return runCatching(SendMessageResponse::class.java) {
+        val res = runCatching(SendMessageResponse::class.java) {
             frontendController.sendTextMessage(body)
         }
+
+        if (res.status != ResponseStatus.OK && res.status != ResponseStatus.NOT_READY) {
+            throw ServiceResponseException(res)
+        }
+
+        return res
     }
 
-    override fun sendTypingAction(chatId: String): BasicResponse {
-        return runCatching(BasicResponse::class.java) {
+    override fun sendTypingAction(chatId: String): SimpleResponse {
+        val res = runCatching(SimpleResponse::class.java) {
             frontendController.sendTypingAction(chatId)
         }
+
+        if (res.status != ResponseStatus.OK && res.status != ResponseStatus.NOT_READY) {
+            throw ServiceResponseException(res)
+        }
+
+        return res
     }
 }

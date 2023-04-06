@@ -1,11 +1,11 @@
 package com.momiji.api.neural.text
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.momiji.api.common.model.ResponseStatus
+import com.momiji.api.common.model.exception.ServiceResponseException
 import com.momiji.api.neural.common.model.TaskScheduledResponse
 import com.momiji.api.neural.text.model.HistoryRequest
 import com.momiji.api.neural.text.model.HistoryResponse
-import com.momiji.api.neural.text.model.RawRequest
-import com.momiji.api.neural.text.model.RawResponse
 import feign.FeignException
 import java.util.UUID
 import org.slf4j.Logger
@@ -25,33 +25,33 @@ class TextGenerationControllerWrapper(
             try {
                 objectMapper.readValue(ex.responseBody().get().array(), valueType)
             } catch (ex2: Exception) {
-                logger.error("Unable to deserialize returned value from service. Throwing original exception", ex)
+                logger.error("Unable to deserialize returned value from service. Throwing original exception", ex2)
                 throw ex
             }
         }
     }
 
     override fun requestGenerationFromHistory(content: HistoryRequest): TaskScheduledResponse {
-        return runCatching(TaskScheduledResponse::class.java) {
+        val res = runCatching(TaskScheduledResponse::class.java) {
             textGenerationController.requestGenerationFromHistory(content)
         }
+
+        if (res.status != ResponseStatus.OK) {
+            throw ServiceResponseException(res)
+        }
+
+        return res
     }
 
     override fun getGeneratedFromHistory(promptId: UUID, async: Boolean): HistoryResponse {
-        return runCatching(HistoryResponse::class.java) {
+        val res = runCatching(HistoryResponse::class.java) {
             textGenerationController.getGeneratedFromHistory(promptId, async)
         }
-    }
 
-    override fun requestGenerationFromRaw(content: RawRequest): TaskScheduledResponse {
-        return runCatching(TaskScheduledResponse::class.java) {
-            textGenerationController.requestGenerationFromRaw(content)
+        if (res.status != ResponseStatus.OK && res.status != ResponseStatus.NOT_READY) {
+            throw ServiceResponseException(res)
         }
-    }
 
-    override fun getGeneratedFromRaw(promptId: UUID, async: Boolean): RawResponse {
-        return runCatching(RawResponse::class.java) {
-            textGenerationController.getGeneratedFromRaw(promptId, async)
-        }
+        return res
     }
 }

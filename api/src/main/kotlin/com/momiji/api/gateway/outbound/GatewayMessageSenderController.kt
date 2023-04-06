@@ -1,6 +1,6 @@
 package com.momiji.api.gateway.outbound
 
-import com.momiji.api.common.model.BasicResponse
+import com.momiji.api.common.model.BaseResponse
 import com.momiji.api.common.model.SendMessageResponse
 import com.momiji.api.gateway.outbound.model.FrontendNamesResponse
 import com.momiji.api.gateway.outbound.model.SendTextMessageRequest
@@ -19,7 +19,7 @@ interface GatewayMessageSenderController {
     fun sendTypingAction(
         @RequestParam frontend: String,
         @RequestParam chatId: String
-    ): BasicResponse
+    ): BaseResponse
 
     @GetMapping("frontends")
     fun getFrontendNames(): FrontendNamesResponse

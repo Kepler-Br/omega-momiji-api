@@ -1,8 +1,8 @@
 package com.momiji.api.gateway.outbound
 
-import com.momiji.api.common.model.BasicResponse
 import com.momiji.api.common.model.ResponseStatus
 import com.momiji.api.common.model.SendMessageResponse
+import com.momiji.api.common.model.SimpleResponse
 import com.momiji.api.gateway.outbound.model.FrontendNamesResponse
 import com.momiji.api.gateway.outbound.model.SendTextMessageRequest
 import org.slf4j.Logger
@@ -26,8 +26,8 @@ class GatewayMessageSenderControllerStub : GatewayMessageSenderController {
         )
     }
 
-    override fun sendTypingAction(frontend: String, chatId: String): BasicResponse {
-        return BasicResponse(
+    override fun sendTypingAction(frontend: String, chatId: String): SimpleResponse {
+        return SimpleResponse(
             status = ResponseStatus.OK,
         )
     }
@@ -35,7 +35,8 @@ class GatewayMessageSenderControllerStub : GatewayMessageSenderController {
     override fun getFrontendNames(): FrontendNamesResponse {
         logger.debug("Getting frontend names")
         return FrontendNamesResponse(
-            names = listOf("MockFrontend")
+            names = listOf("MockFrontend"),
+            status = ResponseStatus.OK,
         )
     }
 }

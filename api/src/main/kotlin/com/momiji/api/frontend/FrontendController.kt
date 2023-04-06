@@ -1,8 +1,8 @@
 package com.momiji.api.frontend
 
-import com.momiji.api.common.model.BasicResponse
 import com.momiji.api.common.model.SendMessageRequest
 import com.momiji.api.common.model.SendMessageResponse
+import com.momiji.api.common.model.SimpleResponse
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -26,5 +26,5 @@ interface FrontendController {
         consumes = [MediaType.APPLICATION_JSON_VALUE],
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
-    fun sendTypingAction(@RequestParam("chat_id") chatId: String): BasicResponse
+    fun sendTypingAction(@RequestParam("chat_id") chatId: String): SimpleResponse
 }

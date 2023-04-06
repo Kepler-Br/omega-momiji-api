@@ -7,8 +7,6 @@ import com.momiji.api.neural.text.model.HistoryRequest
 import com.momiji.api.neural.text.model.HistoryResponse
 import com.momiji.api.neural.text.model.Message
 import com.momiji.api.neural.text.model.MessageType
-import com.momiji.api.neural.text.model.RawRequest
-import com.momiji.api.neural.text.model.RawResponse
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 import org.slf4j.Logger
@@ -60,28 +58,6 @@ class TextGenerationControllerStub(
                     messageId = "1",
                 )
             )
-        )
-    }
-
-    override fun requestGenerationFromRaw(
-        content: RawRequest
-    ): TaskScheduledResponse {
-        val requestJsonText = objectMapper.writeValueAsString(content)
-
-        logger.debug(
-            "Requesting raw text generation:\n$requestJsonText"
-        )
-        val promptId = UUID.randomUUID()
-
-        return TaskScheduledResponse(
-            status = ResponseStatus.OK,
-            taskId = promptId
-        )
-    }
-
-    override fun getGeneratedFromRaw(promptId: UUID, async: Boolean): RawResponse {
-        return RawResponse(
-            text = "Stub"
         )
     }
 }

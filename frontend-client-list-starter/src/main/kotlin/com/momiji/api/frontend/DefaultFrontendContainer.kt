@@ -1,6 +1,6 @@
 package com.momiji.api.frontend
 
-import com.momiji.api.common.model.BasicResponse
+import com.momiji.api.common.model.BaseResponse
 import com.momiji.api.common.model.SendMessageRequest
 import com.momiji.api.common.model.SendMessageResponse
 import com.momiji.api.frontend.exception.FrontendNotFoundException
@@ -20,7 +20,7 @@ class DefaultFrontendContainer(
         return getFrontend(frontend).sendTextMessage(body = body)
     }
 
-    override fun sendTypingAction(chatId: String, frontend: String): BasicResponse {
+    override fun sendTypingAction(chatId: String, frontend: String): BaseResponse {
         return getFrontend(frontend).sendTypingAction(chatId = chatId)
     }
 
