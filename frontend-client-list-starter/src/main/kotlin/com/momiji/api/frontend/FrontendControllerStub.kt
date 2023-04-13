@@ -1,5 +1,6 @@
 package com.momiji.api.frontend
 
+import com.momiji.api.common.model.ChatAdminsResponse
 import com.momiji.api.common.model.ResponseStatus
 import com.momiji.api.common.model.SendMessageRequest
 import com.momiji.api.common.model.SendMessageResponse
@@ -29,6 +30,15 @@ class FrontendControllerStub : FrontendController {
 
         return SimpleResponse(
             status = ResponseStatus.OK,
+        )
+    }
+
+    override fun getChatAdmins(chatId: String): ChatAdminsResponse {
+        logger.debug("Getting chat admins of \"$chatId\"")
+
+        return ChatAdminsResponse(
+            status = ResponseStatus.OK,
+            adminIds = emptySet()
         )
     }
 }

@@ -1,5 +1,6 @@
 package com.momiji.api.gateway.outbound
 
+import com.momiji.api.common.model.ChatAdminsResponse
 import com.momiji.api.common.model.ResponseStatus
 import com.momiji.api.common.model.SendMessageResponse
 import com.momiji.api.common.model.SimpleResponse
@@ -34,9 +35,19 @@ class GatewayMessageSenderControllerStub : GatewayMessageSenderController {
 
     override fun getFrontendNames(): FrontendNamesResponse {
         logger.debug("Getting frontend names")
+
         return FrontendNamesResponse(
             names = listOf("MockFrontend"),
             status = ResponseStatus.OK,
+        )
+    }
+
+    override fun getChatAdmins(chatId: String, frontend: String): ChatAdminsResponse {
+        logger.debug("Getting chat admins for chat \"$chatId\" and frontend \"$frontend\"")
+
+        return ChatAdminsResponse(
+            status = ResponseStatus.OK,
+            adminIds = emptySet()
         )
     }
 }

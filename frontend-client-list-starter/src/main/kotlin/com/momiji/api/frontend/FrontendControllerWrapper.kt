@@ -1,6 +1,7 @@
 package com.momiji.api.frontend
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.momiji.api.common.model.ChatAdminsResponse
 import com.momiji.api.common.model.ResponseStatus
 import com.momiji.api.common.model.SendMessageRequest
 import com.momiji.api.common.model.SendMessageResponse
@@ -31,6 +32,12 @@ class FrontendControllerWrapper(
     }
 
     override fun sendTextMessage(body: SendMessageRequest): SendMessageResponse {
+        logger.debug(
+            "Sending text message with text \"${body.text}\", " +
+                    "to chat id \"${body.chatId}\", " +
+                    "reply to \"${body.replyTo}\""
+        )
+
         val res = runCatching(SendMessageResponse::class.java) {
             frontendController.sendTextMessage(body)
         }
@@ -43,11 +50,27 @@ class FrontendControllerWrapper(
     }
 
     override fun sendTypingAction(chatId: String): SimpleResponse {
+        logger.debug("Sending typing action to chat id \"$chatId\"")
+
         val res = runCatching(SimpleResponse::class.java) {
             frontendController.sendTypingAction(chatId)
         }
 
         if (res.status != ResponseStatus.OK && res.status != ResponseStatus.NOT_READY) {
+            throw ServiceResponseException(res)
+        }
+
+        return res
+    }
+
+    override fun getChatAdmins(chatId: String): ChatAdminsResponse {
+        logger.debug("Getting chat admins of \"$chatId\"")
+
+        val res = runCatching(ChatAdminsResponse::class.java) {
+            frontendController.getChatAdmins(chatId)
+        }
+
+        if (res.status != ResponseStatus.OK) {
             throw ServiceResponseException(res)
         }
 
