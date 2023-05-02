@@ -7,6 +7,6 @@ data class ChatAdminsResponse(
     override val status: ResponseStatus,
     @JsonProperty("error_message")
     override val errorMessage: String? = null,
-    @JsonProperty("message_id")
+    @JsonProperty("admin_ids")
     val adminIds: Set<String>,
 ) : BaseResponse

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RequestParam
 
 
 interface FrontendController {
@@ -23,12 +22,12 @@ interface FrontendController {
     fun sendTextMessage(@RequestBody body: SendMessageRequest): SendMessageResponse
 
     @RequestMapping(
-        "/actions/typing",
+        "/chats/{chat-id}/actions/typing",
         method = [RequestMethod.POST],
         consumes = [MediaType.APPLICATION_JSON_VALUE],
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
-    fun sendTypingAction(@RequestParam("chat_id") chatId: String): SimpleResponse
+    fun sendTypingAction(@PathVariable("chat-id") chatId: String): SimpleResponse
 
     @RequestMapping(
         "/chats/{chat-id}/admins",
