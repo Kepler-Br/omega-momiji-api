@@ -1,8 +1,8 @@
 package com.momiji.api.gateway.outbound
 
-import com.momiji.api.common.model.BaseResponse
 import com.momiji.api.common.model.ChatAdminsResponse
 import com.momiji.api.common.model.SendMessageResponse
+import com.momiji.api.common.model.SimpleResponse
 import com.momiji.api.gateway.outbound.model.FrontendNamesResponse
 import com.momiji.api.gateway.outbound.model.SendTextMessageRequest
 import org.springframework.http.MediaType
@@ -32,7 +32,7 @@ interface GatewayMessageSenderController {
     fun sendTypingAction(
         @RequestParam frontend: String,
         @RequestParam chatId: String
-    ): BaseResponse
+    ): SimpleResponse
 
     @RequestMapping(
         "frontends",
