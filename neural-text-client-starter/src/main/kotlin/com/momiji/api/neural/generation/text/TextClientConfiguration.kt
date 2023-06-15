@@ -13,14 +13,32 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 @ConditionalOnProperty(
-    prefix = "momiji.clients.neural.text",
+    prefix = "momiji.clients.neural.text-generation",
     name = ["url"]
 )
 class TextClientConfiguration {
 
     @Bean
+    fun textGenerationClientService(
+        client: TextGenerationClient,
+        @Value("\${momiji.clients.neural.text-generation.blocking.timeout-millis:300000}")
+        timeout: Long,
+        @Value("\${momiji.clients.neural.text-generation.blocking.wait-millis:1000}")
+        waitBeforeRequest: Long,
+        @Value("\${momiji.clients.neural.text-generation.blocking.async:false}")
+        runAsync: Boolean,
+    ): TextGenerationClientService {
+        return TextGenerationClientServiceImpl(
+            client = client,
+            timeout = timeout,
+            waitBeforeRequest = waitBeforeRequest,
+            runAsync = runAsync,
+        )
+    }
+
+    @Bean
     @ConditionalOnProperty(
-        prefix = "momiji.clients.neural.text",
+        prefix = "momiji.clients.neural.text-generation",
         name = ["stub"],
         havingValue = "true"
     )
@@ -30,13 +48,13 @@ class TextClientConfiguration {
 
     @Bean
     @ConditionalOnProperty(
-        prefix = "momiji.clients.neural.text",
+        prefix = "momiji.clients.neural.text-generation",
         name = ["stub"],
         havingValue = "false",
         matchIfMissing = true
     )
     fun textGenerationClient(
-        @Value("\${momiji.clients.neural.text.url}") url: String,
+        @Value("\${momiji.clients.neural.text-generation.url}") url: String,
         contract: Contract,
         decoder: Decoder,
         encoder: Encoder,

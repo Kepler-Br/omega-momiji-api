@@ -19,6 +19,24 @@ import org.springframework.context.annotation.Configuration
 class SpeechCaptionClientConfiguration {
 
     @Bean
+    fun speechCaptionClientServiceImpl(
+        client: SpeechCaptionClient,
+        @Value("\${momiji.clients.neural.speech-caption.blocking.timeout-millis:300000}")
+        timeout: Long,
+        @Value("\${momiji.clients.neural.speech-caption.blocking.wait-millis:1000}")
+        waitBeforeRequest: Long,
+        @Value("\${momiji.clients.neural.speech-caption.blocking.async:false}")
+        runAsync: Boolean,
+    ): SpeechCaptionClientServiceImpl {
+        return SpeechCaptionClientServiceImpl(
+            client = client,
+            timeout = timeout,
+            waitBeforeRequest = waitBeforeRequest,
+            runAsync = runAsync,
+        )
+    }
+
+    @Bean
     @ConditionalOnProperty(
         prefix = "momiji.clients.neural.speech-caption",
         name = ["stub"],

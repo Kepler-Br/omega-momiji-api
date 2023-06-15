@@ -19,6 +19,24 @@ import org.springframework.context.annotation.Configuration
 class ImageGenerationClientConfiguration {
 
     @Bean
+    fun imageGenerationClientService(
+        client: ImageGenerationClient,
+        @Value("\${momiji.clients.neural.image-generation.blocking.timeout-millis:300000}")
+        timeout: Long,
+        @Value("\${momiji.clients.neural.image-generation.blocking.wait-millis:1000}")
+        waitBeforeRequest: Long,
+        @Value("\${momiji.clients.neural.image-generation.blocking.async:false}")
+        runAsync: Boolean,
+    ): ImageGenerationClientService {
+        return ImageGenerationClientServiceImpl(
+            client = client,
+            timeout = timeout,
+            waitBeforeRequest = waitBeforeRequest,
+            runAsync = runAsync,
+        )
+    }
+
+    @Bean
     @ConditionalOnProperty(
         prefix = "momiji.clients.neural.image-generation",
         name = ["stub"],

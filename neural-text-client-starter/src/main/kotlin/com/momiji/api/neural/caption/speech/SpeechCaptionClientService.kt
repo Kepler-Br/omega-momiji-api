@@ -5,8 +5,12 @@ import com.momiji.api.neural.common.model.TaskScheduledResponse
 import java.util.UUID
 
 interface SpeechCaptionClientService {
+    fun requestCaptionBlocking(
+        data: ByteArray,
+    ): String
+
     fun requestCaption(
-        data: String,
+        data: ByteArray,
     ): TaskScheduledResponse
 
     fun getCaption(

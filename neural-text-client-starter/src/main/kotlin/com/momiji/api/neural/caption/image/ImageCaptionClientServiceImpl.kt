@@ -2,18 +2,30 @@ package com.momiji.api.neural.caption.image
 
 import com.momiji.api.neural.caption.image.model.ImageCaptionResponse
 import com.momiji.api.neural.caption.image.model.ImageCaptioningRequest
+import com.momiji.api.neural.common.AbstractClientService
 import com.momiji.api.neural.common.model.TaskScheduledResponse
+import java.util.Base64
 import java.util.UUID
-import org.springframework.stereotype.Service
 
-@Service
 class ImageCaptionClientServiceImpl(
     private val imageCaptionClient: ImageCaptionClient,
-) : ImageCaptionClientService {
-    override fun requestCaption(data: String, condition: String?): TaskScheduledResponse {
+    timeout: Long,
+    waitBeforeRequest: Long,
+    runAsync: Boolean,
+) : ImageCaptionClientService, AbstractClientService(timeout, waitBeforeRequest, runAsync) {
+    override fun requestCaptionBlocking(data: ByteArray, condition: String?): String {
+        val scheduled = requestCaption(
+            data = data,
+            condition = condition,
+        )
+
+        return requestUntilTimeout(scheduled.taskId!!, ::getCaption).caption!!
+    }
+
+    override fun requestCaption(data: ByteArray, condition: String?): TaskScheduledResponse {
         return imageCaptionClient.requestCaption(
             ImageCaptioningRequest(
-                data = data,
+                data = Base64.getEncoder().encodeToString(data),
                 condition = condition,
             )
         )

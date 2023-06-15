@@ -8,6 +8,15 @@ import com.momiji.api.neural.generation.text.model.MessageType
 import java.util.UUID
 
 interface TextGenerationClientService {
+    fun requestGenerationFromHistoryBlocking(
+        generationParams: GenerationParams,
+        messageType: MessageType,
+        prompt: String? = null,
+        promptAuthor: String? = null,
+        replyToMessageId: Int? = null,
+        history: List<Message> = emptyList(),
+    ): List<Message>
+
     fun requestGenerationFromHistory(
         generationParams: GenerationParams,
         messageType: MessageType,

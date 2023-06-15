@@ -19,6 +19,24 @@ import org.springframework.context.annotation.Configuration
 class ImageCaptionClientConfiguration {
 
     @Bean
+    fun imageCaptionClientService(
+        imageCaptionClient: ImageCaptionClient,
+        @Value("\${momiji.clients.neural.image-caption.blocking.timeout-millis:300000}")
+        timeout: Long,
+        @Value("\${momiji.clients.neural.image-caption.blocking.wait-millis:1000}")
+        waitBeforeRequest: Long,
+        @Value("\${momiji.clients.neural.image-caption.blocking.async:false}")
+        runAsync: Boolean,
+    ): ImageCaptionClientService {
+        return ImageCaptionClientServiceImpl(
+            imageCaptionClient = imageCaptionClient,
+            timeout = timeout,
+            waitBeforeRequest = waitBeforeRequest,
+            runAsync = runAsync,
+        )
+    }
+
+    @Bean
     @ConditionalOnProperty(
         prefix = "momiji.clients.neural.image-caption",
         name = ["stub"],

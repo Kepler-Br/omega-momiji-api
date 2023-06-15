@@ -5,8 +5,13 @@ import com.momiji.api.neural.common.model.TaskScheduledResponse
 import java.util.UUID
 
 interface ImageCaptionClientService {
+    fun requestCaptionBlocking(
+        data: ByteArray,
+        condition: String?,
+    ): String
+
     fun requestCaption(
-        data: String,
+        data: ByteArray,
         condition: String?,
     ): TaskScheduledResponse
 
