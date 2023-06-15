@@ -29,10 +29,10 @@ class FrontendClientListConfiguration {
         properties: FrontendsConfigurationProperties,
     ): FrontendContainer {
         val clients = properties.urls.mapValues {
-            FrontendControllerStub()
+            FrontendClientStub()
         }
 
-        return DefaultFrontendContainer(clients = clients)
+        return FrontendContainerImpl(clients = clients)
     }
 
     @Bean
@@ -42,7 +42,7 @@ class FrontendClientListConfiguration {
         havingValue = "false",
         matchIfMissing = true
     )
-    fun frontendControllerContainer(
+    fun frontendClientContainer(
         properties: FrontendsConfigurationProperties,
         contract: Contract,
         decoder: Decoder,
@@ -54,14 +54,14 @@ class FrontendClientListConfiguration {
                 .encoder(encoder)
                 .decoder(decoder)
                 .contract(contract)
-                .target(FrontendController::class.java, it.value)
+                .target(FrontendClient::class.java, it.value)
 
-            FrontendControllerWrapper(
-                frontendController = client,
+            FrontendClientWrapper(
+                frontendClient = client,
                 objectMapper = objectMapper,
             )
         }
 
-        return DefaultFrontendContainer(clients = clients)
+        return FrontendContainerImpl(clients = clients)
     }
 }

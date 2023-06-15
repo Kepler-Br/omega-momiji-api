@@ -23,8 +23,8 @@ class BotClientListConfiguration {
         name = ["stub"],
         havingValue = "true"
     )
-    fun botReceiveMessageControllerStub(): BotReceiveMessageController {
-        return BotReceiveMessageControllerStub()
+    fun botReceiveMessageClientStub(): BotReceiveMessageClient {
+        return BotReceiveMessageClientStub()
     }
 
     @Bean
@@ -34,20 +34,20 @@ class BotClientListConfiguration {
         havingValue = "false",
         matchIfMissing = true
     )
-    fun botReceiveMessageControllerContainer(
+    fun botReceiveMessageClientContainer(
         config: ConfigurationProperties,
         contract: Contract,
         decoder: Decoder,
         encoder: Encoder,
-    ): BotReceiveMessageController {
+    ): BotReceiveMessageClient {
         val clients = config.urls.map {
             Feign.builder()
                 .encoder(encoder)
                 .decoder(decoder)
                 .contract(contract)
-                .target(BotReceiveMessageController::class.java, it)
+                .target(BotReceiveMessageClient::class.java, it)
         }
 
-        return BotReceiveMessageControllerContainer(clients)
+        return BotReceiveMessageClientContainer(clients)
     }
 }

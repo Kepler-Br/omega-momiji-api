@@ -1,2 +1,5 @@
 org.springframework.cloud.openfeign.FeignClientsConfiguration
-com.momiji.api.neural.text.NeuralTextClientConfiguration
+com.momiji.api.neural.generation.text.TextClientConfiguration
+com.momiji.api.neural.generation.image.ImageGenerationClientConfiguration
+com.momiji.api.neural.caption.image.ImageCaptionClientConfiguration
+com.momiji.api.neural.caption.speech.SpeechCaptionClientConfiguration

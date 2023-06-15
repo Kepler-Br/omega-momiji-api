@@ -22,8 +22,8 @@ class GatewayOutboundClientConfiguration {
         name = ["stub"],
         havingValue = "true"
     )
-    fun gatewayMessageSenderControllerStub(): GatewayMessageSenderController {
-        return GatewayMessageSenderControllerStub()
+    fun gatewayMessageSenderClientStub(): GatewayMessageSenderClient {
+        return GatewayMessageSenderClientStub()
     }
 
     @Bean
@@ -38,11 +38,11 @@ class GatewayOutboundClientConfiguration {
         contract: Contract,
         decoder: Decoder,
         encoder: Encoder,
-    ): GatewayMessageSenderController {
+    ): GatewayMessageSenderClient {
         return Feign.builder()
             .encoder(encoder)
             .decoder(decoder)
             .contract(contract)
-            .target(GatewayMessageSenderController::class.java, "$url/outbound")
+            .target(GatewayMessageSenderClient::class.java, "$url/outbound")
     }
 }
