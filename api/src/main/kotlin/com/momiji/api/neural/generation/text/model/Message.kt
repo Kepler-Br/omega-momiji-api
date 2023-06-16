@@ -6,7 +6,7 @@ data class Message(
     @JsonProperty("message_type")
     val messageType: MessageType,
     @JsonProperty("content")
-    val content: String,
+    val content: String?,
     @JsonProperty("author")
     val author: String,
     @JsonProperty("message_id")

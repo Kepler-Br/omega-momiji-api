@@ -5,4 +5,6 @@ enum class MessageType {
     IMAGE,
     STICKER,
     TEXT,
+    VIDEO,
+    AUDIO,
 }
