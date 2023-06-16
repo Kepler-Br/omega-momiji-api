@@ -1,10 +1,10 @@
-package com.momiji.api.common.model
+package com.momiji.api.frontend.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-data class SendMessageRequest(
-    @JsonProperty("text")
-    val text: String,
+data class SendBinaryMessageFrontendRequest(
+    @JsonProperty("data")
+    val data: String,
     @JsonProperty("reply_to")
     val replyTo: String? = null,
     @JsonProperty("chat_id")

@@ -7,6 +7,7 @@ import feign.codec.Decoder
 import feign.codec.Encoder
 import java.util.concurrent.ConcurrentHashMap
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -19,6 +20,7 @@ import org.springframework.context.annotation.Configuration
 class SpeechCaptionClientConfiguration {
 
     @Bean
+    @ConditionalOnBean(SpeechCaptionClient::class)
     fun speechCaptionClientServiceImpl(
         client: SpeechCaptionClient,
         @Value("\${momiji.clients.neural.speech-caption.blocking.timeout-millis:300000}")

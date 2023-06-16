@@ -1,8 +1,10 @@
-package com.momiji.api.common.model
+package com.momiji.api.frontend.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.momiji.api.common.model.BaseResponse
+import com.momiji.api.common.model.ResponseStatus
 
-data class SendMessageResponse(
+data class SendMessageFrontendResponse(
     @JsonProperty("status")
     override val status: ResponseStatus,
     @JsonProperty("error_message")

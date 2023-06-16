@@ -1,10 +1,11 @@
 package com.momiji.api.gateway.outbound
 
-import com.momiji.api.common.model.ChatAdminsResponse
+import com.momiji.api.frontend.model.ChatAdminsFrontendResponse
 import com.momiji.api.common.model.ResponseStatus
-import com.momiji.api.common.model.SendMessageResponse
+import com.momiji.api.frontend.model.SendMessageFrontendResponse
 import com.momiji.api.common.model.SimpleResponse
 import com.momiji.api.gateway.outbound.model.FrontendNamesResponse
+import com.momiji.api.gateway.outbound.model.SendBinaryMessageGatewayRequest
 import com.momiji.api.gateway.outbound.model.SendTextMessageRequest
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -12,7 +13,37 @@ import org.slf4j.LoggerFactory
 class GatewayMessageSenderClientStub : GatewayMessageSenderClient {
     private val logger: Logger = LoggerFactory.getLogger(javaClass)
 
-    override fun sendText(request: SendTextMessageRequest): SendMessageResponse {
+    override fun sendImage(request: SendBinaryMessageGatewayRequest): SendMessageFrontendResponse {
+        logger.debug(
+            "Sending image message to frontend \"${request.frontend}\", " +
+                    "to chatId \"${request.chatId}\", " +
+                    "with binary of \"${request.data.length}\" bytes, " +
+                    "with reply to message id \"${request.replyToMessageId}\""
+        )
+
+        return SendMessageFrontendResponse(
+            errorMessage = null,
+            messageId = "messageId",
+            status = ResponseStatus.OK,
+        )
+    }
+
+    override fun sendVoice(request: SendBinaryMessageGatewayRequest): SendMessageFrontendResponse {
+        logger.debug(
+            "Sending voice message to frontend \"${request.frontend}\", " +
+                    "to chatId \"${request.chatId}\", " +
+                    "with binary of \"${request.data.length}\" bytes, " +
+                    "with reply to message id \"${request.replyToMessageId}\""
+        )
+
+        return SendMessageFrontendResponse(
+            errorMessage = null,
+            messageId = "messageId",
+            status = ResponseStatus.OK,
+        )
+    }
+
+    override fun sendText(request: SendTextMessageRequest): SendMessageFrontendResponse {
         logger.debug(
             "Sending text message to frontend \"${request.frontend}\", " +
                     "to chatId \"${request.chatId}\", " +
@@ -20,7 +51,7 @@ class GatewayMessageSenderClientStub : GatewayMessageSenderClient {
                     "with reply to message id \"${request.replyToMessageId}\""
         )
 
-        return SendMessageResponse(
+        return SendMessageFrontendResponse(
             errorMessage = null,
             messageId = "messageId",
             status = ResponseStatus.OK,
@@ -42,12 +73,12 @@ class GatewayMessageSenderClientStub : GatewayMessageSenderClient {
         )
     }
 
-    override fun getChatAdmins(chatId: String, frontend: String): ChatAdminsResponse {
+    override fun getChatAdmins(chatId: String, frontend: String): ChatAdminsFrontendResponse {
         logger.debug("Getting chat admins for chat \"$chatId\" and frontend \"$frontend\"")
 
-        return ChatAdminsResponse(
+        return ChatAdminsFrontendResponse(
             status = ResponseStatus.OK,
-            adminIds = emptySet()
+            adminIds = emptyList()
         )
     }
 }

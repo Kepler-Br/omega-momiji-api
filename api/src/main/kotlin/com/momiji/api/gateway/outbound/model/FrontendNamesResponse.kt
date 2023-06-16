@@ -10,5 +10,5 @@ data class FrontendNamesResponse(
     @JsonProperty("error_message")
     override val errorMessage: String? = null,
     @JsonProperty("names")
-    val names: List<String>,
+    val names: List<String>?,
 ) : BaseResponse

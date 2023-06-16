@@ -11,4 +11,4 @@ data class HistoryResponse(
     override val errorMessage: String?,
     @JsonProperty("messages")
     val messages: List<Message>?,
-): BaseResponse
+) : BaseResponse
