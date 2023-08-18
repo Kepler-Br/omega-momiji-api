@@ -31,6 +31,16 @@ interface GatewayMessageSenderService {
         replyToMessageId: String? = null,
     ): String
 
+    /**
+     * @return messageId that was sent
+     */
+    fun sendTextWithTyping(
+        frontend: String,
+        text: String,
+        chatId: String,
+        replyToMessageId: String? = null,
+    ): String
+
     fun sendTypingAction(frontend: String, chatId: String)
     fun getFrontendNames(): List<String>
     fun getChatAdmins(chatId: String, frontend: String): List<String>

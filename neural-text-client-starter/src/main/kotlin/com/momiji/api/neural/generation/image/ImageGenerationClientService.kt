@@ -7,12 +7,12 @@ import java.util.UUID
 interface ImageGenerationClientService {
     fun requestGenerationBlocking(
         prompt: String,
-        negativePrompt: String?,
+        negativePrompt: String? = null,
     ): ByteArray
 
     fun requestGeneration(
         prompt: String,
-        negativePrompt: String?,
+        negativePrompt: String? = null,
     ): TaskScheduledResponse
 
     fun getGenerated(

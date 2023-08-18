@@ -6,7 +6,7 @@ data class HistoryRequest(
     @JsonProperty("generation_params")
     val generationParams: GenerationParams,
     @JsonProperty("message_type")
-    val messageType: MessageType,
+    val messageType: MessageType? = null,
     @JsonProperty("prompt")
     val prompt: String? = null,
     @JsonProperty("prompt_author")

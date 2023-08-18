@@ -65,6 +65,22 @@ class GatewayMessageSenderServiceImpl(
         ).messageId!!
     }
 
+    override fun sendTextWithTyping(
+        frontend: String,
+        text: String,
+        chatId: String,
+        replyToMessageId: String?,
+    ): String {
+        sendTypingAction(frontend=frontend, chatId=chatId)
+
+        return sendText(
+            frontend = frontend,
+            text = text,
+            chatId = chatId,
+            replyToMessageId = replyToMessageId,
+        )
+    }
+
     override fun sendTypingAction(frontend: String, chatId: String) {
         client.sendTypingAction(frontend = frontend, chatId = chatId)
     }
